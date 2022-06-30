@@ -1,0 +1,53 @@
+Name: detox
+Summary: a program that renames files to make them easier to work with
+URL: https://github.com/dharple/detox
+SCM: https://github.com/dharple/detox
+Version: 1.4.5
+Release: 0
+Group: System
+License: BSD-3
+Sources:
+    - '%{name}-%{version}.tar.gz'
+Description: |
+    %{summary}
+    under Unix and related operating systems.  
+
+    Spaces and various other unsafe characters (such as "$") get replaced with
+    "_". ISO 8859-1 (Latin-1) characters can be transliterated to ASCII, as can
+    UTF-8 characters.
+
+    %if "%{?vendor}" == "chum"
+    PackageName: Detox
+    PackagerName: nephros
+    Type: console-application
+    Categories:
+      - Utility
+      - FileTools
+    Custom:
+      PackagingRepo: https://github.com/sailfishos-chum/detox
+    %endif
+
+PkgBR:
+    - 'autoconf'
+    - 'automake'
+    - 'bison'
+    - 'flex'
+SetupOptions: '-q -n %{name}-%{version}/upstream'
+Configure: reconfigure
+Files:
+  - '%{_bindir}/*'
+  - '%config(noreplace) %{_sysconfdir}/detoxrc'
+  - '%{_sysconfdir}/detoxrc.sample'
+  - '%{_datadir}/%{name}/iso8859_1.tbl'
+  - '%{_datadir}/%{name}/iso8859_1.tbl.sample'
+  - '%{_datadir}/%{name}/safe.tbl'
+  - '%{_datadir}/%{name}/safe.tbl.sample'
+  - '%{_datadir}/%{name}/unicode.tbl'
+  - '%{_datadir}/%{name}/unicode.tbl.sample'
+  - '%doc %{_docdir}/detox/README.md'
+SubPackages:
+    - Name:  doc
+      Summary: Documentation for %{name}
+      Group: Documentation
+      Files:
+        - '%{_mandir}/*/*'
