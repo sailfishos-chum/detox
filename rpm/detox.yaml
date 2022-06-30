@@ -5,7 +5,7 @@ SCM: https://github.com/dharple/detox
 Version: 1.4.5
 Release: 0
 Group: System
-License: BSD-3
+License: BSD-3-Clause
 Sources:
     - '%{name}-%{version}.tar.gz'
 Description: |
@@ -34,10 +34,14 @@ PkgBR:
     - 'flex'
 SetupOptions: '-q -n %{name}-%{version}/upstream'
 Configure: reconfigure
+ConfigOptions:
+  - 'CFLAGS="$RPM_OPT_FLAGS -fPIC -pie"'
+  - 'CXXFLAGS="$RPM_OPT_FLAGS -fPIC -pie"'
 Files:
+  - '%license LICENSE'
   - '%{_bindir}/*'
   - '%config(noreplace) %{_sysconfdir}/detoxrc'
-  - '%{_sysconfdir}/detoxrc.sample'
+  - '%config %{_sysconfdir}/detoxrc.sample'
   - '%{_datadir}/%{name}/iso8859_1.tbl'
   - '%{_datadir}/%{name}/iso8859_1.tbl.sample'
   - '%{_datadir}/%{name}/safe.tbl'

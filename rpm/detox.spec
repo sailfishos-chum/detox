@@ -12,7 +12,7 @@ Summary:    a program that renames files to make them easier to work with
 Version:    1.4.5
 Release:    0
 Group:      System
-License:    BSD-3
+License:    BSD-3-Clause
 URL:        https://github.com/dharple/detox
 Source0:    %{name}-%{version}.tar.gz
 Source100:  detox.yaml
@@ -59,7 +59,10 @@ Requires:   %{name} = %{version}-%{release}
 # >> build pre
 # << build pre
 
-%reconfigure --disable-static
+%reconfigure --disable-static \
+    CFLAGS="$RPM_OPT_FLAGS -fPIC -pie" \
+    CXXFLAGS="$RPM_OPT_FLAGS -fPIC -pie"
+
 make %{?_smp_mflags}
 
 # >> build post
@@ -76,9 +79,10 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
+%license LICENSE
 %{_bindir}/*
 %config(noreplace) %{_sysconfdir}/detoxrc
-%{_sysconfdir}/detoxrc.sample
+%config %{_sysconfdir}/detoxrc.sample
 %{_datadir}/%{name}/iso8859_1.tbl
 %{_datadir}/%{name}/iso8859_1.tbl.sample
 %{_datadir}/%{name}/safe.tbl
